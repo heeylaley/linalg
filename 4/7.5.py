@@ -4,7 +4,8 @@ import sys
 
 def begin():
     try:
-        return int(input('Число неизвестных = '))
+        num = int(input('Число неизвестных = '))
+        return num
     except ValueError:
         print("Введите правильные данные (Нужно ввести\033[1m число\033[0;0m)")
         return begin()
@@ -15,19 +16,18 @@ a = np.zeros((n, n + 1))
 x = np.zeros(n)
 
 
-def input_num(matrix):
+def input_num(num, matrix):
     try:
-        return matrix[i][j] == float(input('a[' + str(i) + '][' + str(j) + ']= '))
+        for el in range(num):
+            for elel in range(num + 1):
+                a[el][elel] = float(input('a[' + str(el) + '][' + str(elel) + ']= '))
     except ValueError:
         print("Введите правильные данные (Нужно ввести\033[1m число\033[0;0m)")
-        return input_num(matrix)
+        return input_num(num, matrix)
 
 
 print('Введите коэффиценты, где последний коэффициент это правая часть уравнения (= ...):')
-for i in range(n):
-    for j in range(n + 1):
-        input_num(a)
-
+input_num(n, a)
 
 for i in range(n):
     if a[i][i] == 0.0:
@@ -49,6 +49,6 @@ for i in range(n - 2, -1, -1):
 
     x[i] = x[i] / a[i][i]
 
-print('\nRequired solution is: ')
+print('\nРешение СЛАУ: ')
 for i in range(n):
     print('X%d = %0.2f' % (i, x[i]), end='\t')
